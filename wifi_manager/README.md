@@ -1,18 +1,23 @@
 # Wifi Manager
 
 Idle:
+
 Show current signal strength
 
 ![](images/strengthYellow.png)
+
 ![](images/strengthGreen.png)
 
 Changing the colors depending on the sinal strenght
 
 Clickable:
+
 - Give a list of networks to connect to
+
 ![](images/menuWiFi.jpg)
 
 - If a network is selected, ask for password and try to connect
+
 ![](images/passMenu.png)
 
 
@@ -21,9 +26,7 @@ Clickable:
 nmcli
 
 # Installation
-It was designed to be used with i3blocks. Just copy the recommended configuration below into your 'i3blocks.conf'
-
-To use with i3blocks, copy the blocklet configuration in the given `i3blocks.conf` into your i3blocks configuration file, the recommended config is
+It was designed to be used with i3blocks. Just copy the recommended configuration below into your `i3blocks.conf`
 
 ```INI
 [wiFiManager]
