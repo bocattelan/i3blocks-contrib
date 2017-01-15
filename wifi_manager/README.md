@@ -2,7 +2,7 @@
 
 Idle:
 
-Show current signal strength changing the colors depending on the sinal strenght
+Show current signal strength changing the colors depending on the sinal strength
 
 ![](images/strenghtYellow.png)
 
