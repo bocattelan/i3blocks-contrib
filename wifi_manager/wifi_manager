@@ -1,0 +1,81 @@
+#!/bin/bash
+# Copyright (C) 2017 Bruno Oliveira Cattelan <github@bocattelan.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#------------------------------------------------------------------------
+
+INTERFACE="${BLOCK_INSTANCE:-wlp1s0}"
+
+#------------------------------------------------------------------------
+
+# As per #36 -- It is transparent: e.g. if the machine has no battery or wireless
+# connection (think desktop), the corresponding block should not be displayed.
+#[[ ! -d /sys/class/net/${INTERFACE}/wireless ]] ||
+ #   [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]] && exit
+
+#------------------------------------------------------------------------
+
+QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+
+#------------------------------------------------------------------------
+
+if [[ "$BLOCK_BUTTON" -eq 1 ]]; then 
+	selection=$( (nmcli d wifi) | grep -v "SSID" | rofi -dmenu -p "select network:")
+	read -a arr <<<$selection
+	if [[ -z "$selection" ]]; then
+		echo "None Selected"
+	elif [[ "${arr[0]}" == "*" ]]; then
+		nmcli d disconnect $INTERFACE
+		echo "Disconnected"
+	else
+		#echo "no connection"
+		#passwd=$(dialog --title "Password" \
+		#--clear \
+		#--passwordbox "Enter your password" 10 30 2)
+		passwd=`zenity --password --title=Authentication`
+
+		case $? in
+         0)
+		;;
+         1)
+                echo "Canceled"
+                exit;;
+        -1)
+                echo "An unexpected error has occurred."
+                exit;;
+		esac
+		nmcli d wifi connect ${arr[0]} password $passwd iface $INTERFACE # 57603EA928 iface wlan0
+	fi
+	#echo "${WIFI_LIST}"
+    #echo "oi"
+else
+	if [[ -z "$QUALITY" ]]; then
+		echo "No Connection"
+	else
+		echo $QUALITY% # full text
+		echo $QUALITY% # short text
+	fi
+fi
+
+# color
+if [[ $QUALITY -ge 80 ]]; then
+    echo "#00FF00"
+elif [[ $QUALITY -ge 60 ]]; then
+    echo "#FFF600"
+elif [[ $QUALITY -ge 40 ]]; then
+    echo "#FFAE00"
+else
+    echo "#FF0000"
+fi
