@@ -2,13 +2,11 @@
 
 Idle:
 
-Show current signal strength
+Show current signal strength changing the colors depending on the sinal strenght
+
+![](images/strenghtYellow.png)
 
 ![](images/strenghtGreen.png)
-
-![](images/strenghtGreen.png)
-
-Changing the colors depending on the sinal strenght
 
 Clickable:
 
@@ -16,7 +14,7 @@ Clickable:
 
 ![](images/menuWiFi.jpg)
 
-- If a network is selected, ask for password and try to connect
+- If a network is selected, ask for password and try to connect to it
 
 ![](images/passMenu.png)
 
