@@ -4,9 +4,9 @@ Idle:
 
 Show current signal strength
 
-![](images/strengthYellow.png)
+![](images/strenghtGreen.png)
 
-![](images/strengthGreen.png)
+![](images/strenghtGreen.png)
 
 Changing the colors depending on the sinal strenght
 
