@@ -22,9 +22,9 @@ INTERFACE="${BLOCK_INSTANCE:-wlp1s0}"
 
 # As per #36 -- It is transparent: e.g. if the machine has no battery or wireless
 # connection (think desktop), the corresponding block should not be displayed.
-#[[ ! -d /sys/class/net/${INTERFACE}/wireless ]] ||
- #   [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]] && exit
-
+if [[ ! -d /sys/class/net/${INTERFACE}/wireless ]]; then
+    exit
+fi
 #------------------------------------------------------------------------
 
 QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
